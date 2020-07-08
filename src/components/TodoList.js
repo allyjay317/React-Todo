@@ -3,16 +3,22 @@
 
 import React from 'react'
 import Todo from './Todo'
+import { Grid } from '@material-ui/core'
+
 
 class TodoList extends React.Component{
-
-
     
     render(){
         return (
-            <div className='todo-list'>
+            <Grid
+                container
+                direction='row' 
+                justify='center'
+                alignItems='center'
+                className='todo-list'
+                spacing={2}>
                 {this.props.data.map(task => <Todo data={task} complete={this.props.complete} />)}
-            </div>
+            </Grid>
         )
     }
 }
