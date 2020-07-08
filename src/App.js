@@ -12,11 +12,7 @@ class App extends React.Component {
     debugger
       let data = JSON.parse(window.localStorage.getItem('tasks'))
       this.state = {
-        tasks: data === null ? [{
-          task: 'do the dishes',
-          id: 15,
-          completed: false,
-        }] : data
+        tasks: data === null ? [] : data
       
     }
     
@@ -24,7 +20,10 @@ class App extends React.Component {
 
 
   createNewTask = (task) => {
-    this.setState({...this.state, tasks: [...this.state.tasks, {task: task, id: Date.now(), completed: false}]})
+    this.setState({
+      tasks: [
+        ...this.state.tasks, 
+        {...task, id: Date.now(), completed: false}]})
   }
 
   complete = (task) => {
