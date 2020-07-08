@@ -17,7 +17,15 @@ class TodoList extends React.Component{
                 alignItems='center'
                 className='todo-list'
                 spacing={2}>
-                {this.props.data.map(task => <Todo data={task} complete={this.props.complete} />)}
+                {
+                    this.props.data.map(task => {
+                        debugger
+                        if(this.props.searchText == '' || task.task.toLowerCase().includes(this.props.searchText.toLowerCase())){
+                            return <Todo data={task} complete={this.props.complete} />
+                        }
+                    }
+                    )
+                }
             </Grid>
         )
     }

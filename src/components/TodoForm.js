@@ -1,5 +1,6 @@
 import React from 'react'
-import { Modal } from '@material-ui/core'
+import { Modal, withStyles, Card, CardContent, TextField, Button, CardActions } from '@material-ui/core'
+import { useStyles } from './useStyles'
 
 class TodoForm extends React.Component{
     constructor(props){
@@ -29,31 +30,34 @@ class TodoForm extends React.Component{
     }
 
     render(){
+        const { classes } = this.props
         return(
             <Modal
                 open={this.props.isOpen}
                 onClose={this.props.close}
             >
-                <div style={{
-                    position: 'absolute',
-                    width: 400,
-                    backgroundColor: 'whitesmoke',
-                    border: '2px solid #000',
-                    padding: '10px',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)'
-                }}>
-                <form onSubmit={this.handleSubmit}>
-                    <label htmlFor='task'>New Task</label>
-                    <input onChange={this.handleChanges} value={this.state.task.task} type='text' id='task' name='task' />
-                    <button type='submit' onClick={this.handleSubmit}>Add New Task</button>
+                <Card className={classes.todoForm}>
                     
-                </form>
-                </div>
+                    <CardContent>
+                        <form onSubmit={this.handleSubmit}>
+                            <TextField 
+                                id='standard-required' 
+                                label='New Task' 
+                                defaultValue='Enter Task Here' 
+                                value={this.state.task.task} 
+                                name='task' 
+                                onChange={this.handleChanges}
+                            />
+                            <CardActions>
+                            <Button size='small' onClick={this.handleSubmit}>Add New Task</Button>
+                            </CardActions>
+                            
+                        </form>
+                    </CardContent>
+                </Card>
             </Modal>
         )
     }
 }
 
-export default TodoForm
+export default withStyles(useStyles)(TodoForm)

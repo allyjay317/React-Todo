@@ -1,11 +1,8 @@
 import React from 'react';
-import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import './components/Todo.css'
 import TodoAppBar from './components/TodoAppBar.jsx';
-import { Fab, Container } from '@material-ui/core';
-
-import ActionButtons from './components/ActionButtons';
+import TodoContainer from './components/TodoContainer';
 
 class App extends React.Component {
   // you will need a place to store your state in this component.
@@ -19,7 +16,8 @@ class App extends React.Component {
       this.state = {
         tasks: tasks === null ? [] : tasks,
         addOpen: false,
-        completedTasks: completedTasks === null ? [] : completedTasks
+        completedTasks: completedTasks === null ? [] : completedTasks,
+        searchText: '',
     }
     
   }
@@ -33,13 +31,29 @@ class App extends React.Component {
   }
 
   complete = (task) => {
-    this.setState({
-      tasks: this.state.tasks.map((t) => 
-        t.id === task.id ? 
-          {...t, completed: !t.completed} : 
-          {...t} 
-        )
-    })
+    debugger
+    let completed = this.state.completedTasks.find(t => t.id === task.id)
+    if(completed === undefined){
+      this.setState({
+        tasks: this.state.tasks.map((t) => 
+          t.id === task.id ? 
+            {...t, completed: !t.completed} : 
+            {...t} 
+          )
+      })
+    }
+    else{
+      this.setState({
+        tasks: [
+          ...this.state.tasks,
+          {
+            ...task,
+            completed: !task.completed
+          }
+        ],
+        completedTasks: this.state.completedTasks.filter(t => t.id !== task.id)
+      })
+    }
   }
 
   handleModal = (bool) =>{
@@ -59,15 +73,23 @@ class App extends React.Component {
     
   }
 
+  handleSearch = e =>{
+        this.setState({searchText: e.target.value})
+  }
+
   render() {
     return (
       <div key='root'>
-        <TodoAppBar />
-        <Container style={{marginTop: '100px'}}>
-          <TodoForm isOpen={this.state.addOpen} change={this.handleChanges} submit={this.createNewTask} clear={this.clearCompleted} close={()=> this.handleModal(false)}/>
-          <TodoList data={this.state.tasks} complete={this.complete} />
-        </Container>
-        <ActionButtons add={() => this.handleModal(true)} clear={this.clearCompleted}/>
+        <TodoAppBar searchText={this.state.searchText} handleSearch={this.handleSearch}/>
+        <TodoForm isOpen={this.state.addOpen} change={this.handleChanges} submit={this.createNewTask} clear={this.clearCompleted} close={()=> this.handleModal(false)}/>
+        <TodoContainer 
+          tasks={this.state.tasks} 
+          complete={this.complete} 
+          show={this.handleModal} 
+          clear={this.clearCompleted} 
+          completed={this.state.completedTasks}
+          searchText={this.state.searchText} />
+        
       </div>
     );
   }
