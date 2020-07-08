@@ -73,6 +73,13 @@ class App extends React.Component {
     
   }
 
+  delete = (task) => {
+    this.setState({
+      tasks: this.state.tasks.filter((t) => t.id !== task.id),
+      completedTasks: this.state.completedTasks.filter((t) => t.id !== task.id)
+    })
+  }
+
   handleSearch = e =>{
         this.setState({searchText: e.target.value})
   }
@@ -88,7 +95,10 @@ class App extends React.Component {
           show={this.handleModal} 
           clear={this.clearCompleted} 
           completed={this.state.completedTasks}
-          searchText={this.state.searchText} />
+          searchText={this.state.searchText} 
+          delete={this.delete}
+        />
+          
         
       </div>
     );

@@ -21,7 +21,7 @@ class TodoList extends React.Component{
                     this.props.data.map(task => {
                         debugger
                         if(this.props.searchText == '' || task.task.toLowerCase().includes(this.props.searchText.toLowerCase())){
-                            return <Todo data={task} complete={this.props.complete} />
+                            return <Todo data={task} complete={this.props.complete} delete={this.props.delete}/>
                         }
                     }
                     )

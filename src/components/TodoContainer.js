@@ -10,11 +10,21 @@ class TodoContainer extends React.Component{
         return(
             <Container style={{marginTop: '100px'}}>  
                 <Route exact path='/'>
-                    <TodoList data={this.props.tasks} complete={this.props.complete} searchText={this.props.searchText}/>
+                    <TodoList 
+                        data={this.props.tasks} 
+                        complete={this.props.complete} 
+                        searchText={this.props.searchText} 
+                        delete={this.props.delete}
+                    />
                     <ActionButtons add={() => this.props.show(true)} clear={this.props.clear}/>
                 </Route>
                 <Route path='/complete'>
-                    <TodoList data={this.props.completed} complete={this.props.complete}  searchText={this.props.searchText}/>
+                    <TodoList 
+                        data={this.props.completed} 
+                        complete={this.props.complete}  
+                        searchText={this.props.searchText} 
+                        delete={this.props.delete}
+                    />
                 </Route>
             </Container>
         )

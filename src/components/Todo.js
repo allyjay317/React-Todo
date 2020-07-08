@@ -9,6 +9,10 @@ class Todo extends React.Component {
         e.preventDefault()
         this.props.complete(this.props.data)
     }
+    delete = e =>{
+        e.preventDefault()
+        this.props.delete(this.props.data)
+    }
 
     render(){
         const { classes } = this.props
@@ -29,6 +33,7 @@ class Todo extends React.Component {
                     </CardContent>
                     <CardActions>
                         <Button size='small' onClick={this.onClick}>{this.props.data.completed ? 'Reset' : 'Complete'}</Button>
+                        <Button size='small' onClick={this.delete}>Delete Task</Button>
                     </CardActions>
                 </Card>
             </Grid>
